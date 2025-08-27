@@ -4,13 +4,11 @@
     <testcase name="testSuccessfulCase" classname="com.example.TestClass" time="0.052">
     </testcase>
     <testcase name="testFailedCaseWithAttachments" classname="com.example.TestClass" time="0.071">
-      <failure message="Expected true but was false" type="java.lang.AssertionError">
-        <![CDATA[
-          at org.junit.Assert.fail(Assert.java:88)
-          at org.junit.Assert.assertTrue(Assert.java:41)
-          at com.example.TestClass.testFailedCase(TestClass.java:15)
-        ]]>
-      </failure>
+      <failure message="Expected true but was false" type="java.lang.AssertionError"><![CDATA[
+  at org.junit.Assert.fail(Assert.java:88)
+  at org.junit.Assert.assertTrue(Assert.java:41)
+  at com.example.TestClass.testFailedCase(TestClass.java:15)
+]]></failure>
       <properties>
         <property name="attachment_1" value="57-375x667.jpg" />
         <property name="attachment_2" value="121-375x667.jpg" />
