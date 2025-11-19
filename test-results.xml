@@ -12,6 +12,7 @@
       <properties>
         <property name="attachment_1" value="57-375x667.jpg" />
         <property name="attachment_2" value="121-375x667.jpg" />
+        <property name="attachment_3" value="rickroll.mp4" />
       </properties>
     </testcase>
   </testsuite>
