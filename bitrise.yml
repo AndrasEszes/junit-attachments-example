@@ -9,18 +9,6 @@ workflows:
         inputs:
         - search_pattern: "*test-results.xml"
         - test_name: CustomJUnitWithAttachments
-    - script:
-        inputs:
-        - content: |-
-            #!/usr/bin/env bash
-            set -e
-            set -o pipefail
-            set -x
-
-            TEST_RESULTS_DIR=$(find "$BITRISE_TEST_DEPLOY_DIR" -type f -name "test-results.xml" -exec dirname {} \; | head -n 1)
-
-            cp ./*.jpg $TEST_RESULTS_DIR
-        title: Copy attachments to Test directory
     - deploy-to-bitrise-io: {}
 meta:
   bitrise.io:
