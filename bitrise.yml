@@ -8,7 +8,7 @@ workflows:
     - custom-test-results-export:
         inputs:
         - search_pattern: "*test-results.xml"
-        - test_name: CustomJUnitWithAttachments
+        - test_name: primary
     - deploy-to-bitrise-io: {}
 meta:
   bitrise.io:
