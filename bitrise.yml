@@ -10,6 +10,14 @@ workflows:
         - search_pattern: "*test-results.xml"
         - test_name: primary
     - deploy-to-bitrise-io: {}
+  secondary:
+    steps:
+    - git-clone: {}
+    - custom-test-results-export:
+        inputs:
+        - search_pattern: "*test-results.xml"
+        - test_name: primary
+    - deploy-to-bitrise-io: {}
 meta:
   bitrise.io:
     stack: linux-docker-android-22.04
