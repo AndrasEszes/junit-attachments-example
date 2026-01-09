@@ -12,5 +12,5 @@ workflows:
     - deploy-to-bitrise-io: {}
 meta:
   bitrise.io:
-    stack: linux-docker-android-22.04
+    stack: invalid
     machine_type_id: standard
