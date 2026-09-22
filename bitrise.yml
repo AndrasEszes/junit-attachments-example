@@ -12,5 +12,5 @@ workflows:
     - deploy-to-bitrise-io: {}
 meta:
   bitrise.io:
-    stack: invalid
+    stack: ubuntu-noble-24.04-bitrise-2025-android
     machine_type_id: standard
