@@ -1,3 +1,4 @@
+---
 format_version: '23'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: other
@@ -13,4 +14,4 @@ workflows:
 meta:
   bitrise.io:
     stack: ubuntu-noble-24.04-bitrise-2025-android
-    machine_type_id: standard
+    machine_type_id: g2.linux.medium
