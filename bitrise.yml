@@ -6,11 +6,19 @@ workflows:
   primary:
     steps:
     - git-clone: {}
-    - custom-test-results-export:
+    - script:
+        title: Export test results with attachments
         inputs:
-        - search_pattern: "*test-results.xml"
-        - test_name: primary
-    - deploy-to-bitrise-io: {}
+        - content: |-
+            #!/usr/bin/env bash
+            set -euo pipefail
+            dest="$BITRISE_TEST_RESULT_DIR/primary"
+            mkdir -p "$dest"
+            cp -R test-results.xml *.jpg *.mp4 subfolder "$dest/"
+            printf '{"test-name":"primary"}' > "$dest/test-info.json"
+            find "$dest" -type f | sort
+    - git::https://github.com/bitrise-steplib/steps-deploy-to-bitrise-io.git@CI-6515-link-test-attachments:
+        title: Deploy to Bitrise.io (attachment linking branch)
 meta:
   bitrise.io:
     stack: ubuntu-noble-24.04-bitrise-2025-android
