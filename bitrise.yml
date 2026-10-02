@@ -24,7 +24,8 @@ workflows:
         - search_pattern: "*test-results.xml"
         - test_name: primary
         - verbose_log: "yes"
-    - deploy-to-bitrise-io@2.26.0: {}
+    - git::https://github.com/bitrise-steplib/steps-deploy-to-bitrise-io.git@2.26.0:
+        title: Deploy to Bitrise.io 2.26.0
 meta:
   bitrise.io:
     stack: ubuntu-noble-24.04-bitrise-2025-android
