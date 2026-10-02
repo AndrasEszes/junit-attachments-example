@@ -6,11 +6,26 @@ workflows:
   primary:
     steps:
     - git-clone: {}
-    - custom-test-results-export:
+    - script:
+        title: Simulate a test run that writes attachments
         inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            set -euo pipefail
+            mkdir -p build/screenshots/nested build/videos
+            cp reference/com.example.TestClass__testSuccessfulCase__reference.jpg build/screenshots/com.example.TestClass__testSuccessfulCase__1.jpg
+            cp subfolder/262.jpg build/screenshots/nested/com.example.TestClass__testFailedCaseWithAttachments__1.jpg
+            cp rickroll.mp4 build/videos/com.example.TestClass__testFailedCaseWithAttachments__1.mp4
+            find build -type f | sort
+    - git::https://github.com/bitrise-steplib/step-custom-test-results-export.git@CI-6517-collect-convention-attachments:
+        title: Export test results (convention attachments branch)
+        inputs:
+        - base_path: ./
         - search_pattern: "*test-results.xml"
         - test_name: primary
-    - deploy-to-bitrise-io: {}
+        - verbose_log: "yes"
+    - git::https://github.com/bitrise-steplib/steps-deploy-to-bitrise-io.git@2.26.0:
+        title: Deploy to Bitrise.io 2.26.0
 meta:
   bitrise.io:
     stack: ubuntu-noble-24.04-bitrise-2025-android
