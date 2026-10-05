@@ -7,9 +7,17 @@ workflows:
     steps:
     - git-clone: {}
     - custom-test-results-export:
+        title: Export report A
         inputs:
-        - search_pattern: "*test-results.xml"
-        - test_name: primary
+        - base_path: $BITRISE_SOURCE_DIR/report-a
+        - search_pattern: "*/report-a/test-results.xml"
+        - test_name: report-a
+    - custom-test-results-export:
+        title: Export report B
+        inputs:
+        - base_path: $BITRISE_SOURCE_DIR/report-b
+        - search_pattern: "*/report-b/test-results.xml"
+        - test_name: report-b
     - deploy-to-bitrise-io: {}
 meta:
   bitrise.io:

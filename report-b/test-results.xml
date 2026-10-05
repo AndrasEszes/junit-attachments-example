@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="ReportBSuite" tests="1" errors="0" failures="1" skipped="0" time="0.071">
+    <testcase name="testSameAttachmentName" classname="com.example.ReportBTest" time="0.071">
+      <failure message="Expected true but was false" type="java.lang.AssertionError"><![CDATA[
+  at com.example.ReportBTest.testSameAttachmentName(ReportBTest.java:15)
+]]></failure>
+      <properties>
+        <property name="attachment_1" value="screenshot.jpg" />
+      </properties>
+    </testcase>
+  </testsuite>
+</testsuites>
