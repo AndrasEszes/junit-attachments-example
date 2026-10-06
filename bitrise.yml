@@ -11,6 +11,72 @@ workflows:
         - search_pattern: "*test-results.xml"
         - test_name: primary
     - deploy-to-bitrise-io: {}
+  export_all_matches:
+    before_run:
+    - _gradle_results
+    steps:
+    - git::https://github.com/bitrise-steplib/step-custom-test-results-export.git@CI-6543-export-all-matches:
+        title: Export every JUnit XML match
+        inputs:
+        - test_name: Gradle unit tests
+        - base_path: app/build
+        - search_pattern: "*/test-results/testDebugUnitTest/TEST-*.xml"
+        - export_all_matches: "yes"
+    - deploy-to-bitrise-io: {}
+  export_first_match:
+    before_run:
+    - _gradle_results
+    steps:
+    - git::https://github.com/bitrise-steplib/step-custom-test-results-export.git@CI-6543-export-all-matches:
+        title: Export the first match only
+        inputs:
+        - test_name: Gradle unit tests
+        - base_path: app/build
+        - search_pattern: "*/test-results/testDebugUnitTest/TEST-*.xml"
+    - deploy-to-bitrise-io: {}
+  _gradle_results:
+    steps:
+    - git-clone: {}
+    - script:
+        title: Create one JUnit XML per test class and their screenshots, as Gradle and Roborazzi do
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            set -ex
+            results=app/build/test-results/testDebugUnitTest
+            shots=app/build/outputs/roborazzi
+            mkdir -p "$results/binary" "$shots"
+
+            cat > "$results/TEST-com.example.LoginTest.xml" <<'EOF'
+            <?xml version="1.0" encoding="UTF-8"?>
+            <testsuite name="com.example.LoginTest" tests="2" failures="1" errors="0" skipped="0" time="0.42">
+              <testcase name="emptyState" classname="com.example.LoginTest" time="0.2"/>
+              <testcase name="wrongPassword" classname="com.example.LoginTest" time="0.22">
+                <failure message="Screenshot differs from the reference">The error banner is missing</failure>
+              </testcase>
+            </testsuite>
+            EOF
+
+            cat > "$results/TEST-com.example.HomeTest.xml" <<'EOF'
+            <?xml version="1.0" encoding="UTF-8"?>
+            <testsuite name="com.example.HomeTest" tests="1" failures="0" errors="0" skipped="0" time="0.31">
+              <testcase name="feedLoaded" classname="com.example.HomeTest" time="0.31"/>
+            </testsuite>
+            EOF
+
+            cat > "$results/TEST-com.example.SettingsTest.xml" <<'EOF'
+            <?xml version="1.0" encoding="UTF-8"?>
+            <testsuite name="com.example.SettingsTest" tests="1" failures="0" errors="0" skipped="0" time="0.05">
+              <testcase name="togglesDarkMode" classname="com.example.SettingsTest" time="0.05"/>
+            </testsuite>
+            EOF
+
+            echo "binary" > "$results/binary/output.bin"
+
+            cp 121-375x667.jpg "$shots/com.example.LoginTest__emptyState__1.jpg"
+            cp 57-375x667.jpg "$shots/com.example.LoginTest__wrongPassword__1.jpg"
+            cp subfolder/262.jpg "$shots/com.example.HomeTest__feedLoaded__1.jpg"
+            cp rickroll.mp4 "$shots/com.example.HomeTest__feedLoaded__recording.mp4"
 meta:
   bitrise.io:
     stack: ubuntu-noble-24.04-bitrise-2025-android
