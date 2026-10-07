@@ -16,19 +16,18 @@ workflows:
     - _gradle_results
     steps:
     - git::https://github.com/bitrise-steplib/step-custom-test-results-export.git@CI-6543-export-all-matches:
-        title: Export every JUnit XML match
+        title: Export every JUnit XML match (2.0.0 branch)
         inputs:
         - test_name: Gradle unit tests
         - base_path: app/build
         - search_pattern: "*/test-results/testDebugUnitTest/TEST-*.xml"
-        - export_all_matches: "yes"
     - deploy-to-bitrise-io: {}
   export_first_match:
     before_run:
     - _gradle_results
     steps:
-    - git::https://github.com/bitrise-steplib/step-custom-test-results-export.git@CI-6543-export-all-matches:
-        title: Export the first match only
+    - custom-test-results-export@1:
+        title: Export the first match only (1.x)
         inputs:
         - test_name: Gradle unit tests
         - base_path: app/build
